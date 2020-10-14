@@ -16,16 +16,18 @@ import yaml
 #设置email信息
 
 
-def sendEmail(msg, email):
+def sendEmail(msg, receiver):
     email = {}
     try:
-        with open('config/config.yml', 'r', encoding='utf-8') as f:
+        with open('config/config_sign.yml', 'r', encoding='utf-8') as f:
             file_data = f.read()
             config = yaml.load(file_data, Loader=yaml.FullLoader)
-            email = dict(config)
+            config = dict(config)
+            email = config['email']
     except IOError:
         print('IO 出错，无法读取配置文件。' + '\n')
         print(IOError)
+    print(email)
     sender = email['sender']
     mail_host = email['mail_host']
     mail_user = email['mail_user']
@@ -37,8 +39,8 @@ def sendEmail(msg, email):
     #发送方信息
     message['From'] = sender 
     #接受方信息     
-    receivers = [email] 
-    message['To'] = email  
+    receivers = receiver 
+    message['To'] = receiver  
     try:
         # smtpObj = smtplib.SMTP() 
         # #连接到服务器

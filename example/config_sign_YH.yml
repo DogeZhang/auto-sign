@@ -1,0 +1,29 @@
+user:
+  #username 学号或者工号
+  username: '190325019'
+  #tellphone 电话号码
+  tellphone: '13107625068'
+  #address 地址，定位信息
+  address: 中国福建省福州市闽侯县源江路
+  #email 接受通知消息的邮箱
+  email: 949040872@qq.com
+  #lon 当前位置经度，可以访问http://zuobiao.ay800.com/s/27/index.php获取
+  lon: '119.330221'
+  #lat 当前位置纬度
+  lat: '26.047125'
+  #school 学校全称
+  school: 福州大学
+cpdaily:
+  defaults:
+  - default:
+      title: 午检体温 (必填)
+      value: 小于37.3度
+  - default:
+      title: 是否有发热、咳嗽、乏力、呼吸困难等疑似症状(必填)
+      value: 否
+email:
+  isAuthor: '1'
+  mail_host: ''
+  mail_user: ''
+  mail_pass: ''
+  sender: ''

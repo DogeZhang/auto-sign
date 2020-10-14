@@ -75,7 +75,7 @@ def getCpdailyApis(user, debug=False):
 
 
 # 读取yml配置
-def getYmlConfig(yaml_file='config/config.yml'):
+def getYmlConfig(yaml_file='config/config_sign.yml'):
     file = open(yaml_file, 'r', encoding="utf-8")
     file_data = file.read()
     file.close()

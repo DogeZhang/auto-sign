@@ -1,3 +1,4 @@
 /__pycache__
-config/config.yml
+config/config_sign.yml
+config/config_submit.yml
 config/loginSession.yml

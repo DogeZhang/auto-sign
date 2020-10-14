@@ -10,9 +10,9 @@ user:
   #school 学校全称
   school: 福州大学
   #lon 当前位置经度
-  lon: '119.191475'
+  lon: '119.203149'
   #lat 当前位置纬度
-  lat: '26.058264'
+  lat: '26.062701'
   #abnormalReason 反馈信息，不需要可不填
   abnormalReason: 在家
   #photo 签到照片，不需要可不填

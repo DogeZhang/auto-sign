@@ -38,7 +38,7 @@ session.cookies = requests.utils.cookiejar_from_dict(Cookies)
 
 
 # 读取yml配置
-def getYmlConfig(yaml_file='config/config.yml'):
+def getYmlConfig(yaml_file='config/config_sign.yml'):
     file = open(yaml_file, 'r', encoding="utf-8")
     file_data = file.read()
     file.close()
@@ -48,7 +48,7 @@ def getYmlConfig(yaml_file='config/config.yml'):
 
 config = getYmlConfig()
 user = config['user']
-email = config['email']
+email_yml = config['email']
 
 
 # 获取当前utc时间，并格式化为北京时间
@@ -82,6 +82,9 @@ def getUnSignedTasks():
     res = session.post(url=url, headers=headers, data=json.dumps(params))
     # log(res.json())
     unSignedTasks = res.json()['datas']['unSignedTasks']
+    signedTasks = res.json()['datas']['signedTasks']
+    print(unSignedTasks)
+    print(json.dumps(res.json(), indent=4, ensure_ascii=False))
     if len(unSignedTasks) < 1:
         log('当前没有未签到任务')
         exit(-1)
@@ -105,6 +108,7 @@ def getDetailTask(params):
     res = session.post(
         url='https://{host}/wec-counselor-sign-apps/stu/sign/detailSignInstance'.format(host=host),
         headers=headers, data=json.dumps(params))
+    print(json.dumps(res.json(), indent=4, ensure_ascii=False))
     data = res.json()['datas']
     return data
 
@@ -139,7 +143,7 @@ def fillForm(task):
     form['isMalposition'] = task['isMalposition']
     form['abnormalReason'] = user['abnormalReason']
     form['position'] = user['address']
-    # print(form)
+    print(form)
     return form
 
 
@@ -171,9 +175,10 @@ def submitForm(form):
 # 发送邮件通知
 def sendMessage(msg, email):
     send = email
+    isAuthor = email_yml['isAuthor']
     if send != '':
         #使用原作者邮箱服务
-        if email['isAuthor'] == 1:
+        if int(isAuthor) == 1:
             log('正在发送邮件通知。。。')
             res = requests.post(url='http://www.zimo.wiki:8080/mail-sender/sendMail',
                                 data={'title': '今日校园自动签到结果通知', 'content': msg, 'to': send})
@@ -183,10 +188,9 @@ def sendMessage(msg, email):
             else:
                 log('发送邮件通知失败。。。')
                 log(res.json())
-        #使用自己邮箱发送结果
-        else:
+        else: #使用自己邮箱发送结果
             log('正在发送邮件通知。。。')
-            code = sendEmail.sendEmail(msg, email)
+            code = sendEmail.sendEmail(msg, send)
             if code == 0:
                 log('发送邮件通知成功。。。')
             else:
