@@ -9,3 +9,4 @@ requests==2.23.0
 tzlocal==2.0.0
 urllib3==1.25.8
 PyEmail==0.0.1
+PyExecJS==1.5.1

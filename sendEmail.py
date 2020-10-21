@@ -33,8 +33,10 @@ def sendEmail(msg, receiver):
     mail_user = email['mail_user']
     mail_pass = email['mail_pass']
     #邮件内容设置
-    message = MIMEText('content','plain','utf-8')
+    message = MIMEText(msg,'plain','utf-8')
     #邮件主题       
+    if msg == '':
+        msg = '没有内容'
     message['Subject'] = msg 
     #发送方信息
     message['From'] = sender 

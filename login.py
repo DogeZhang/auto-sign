@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 from urllib.parse import urlparse
-
+from bs4 import BeautifulSoup
 import requests
 import json
 import uuid
@@ -10,6 +10,10 @@ from pyDes import des, CBC, PAD_PKCS5
 from datetime import datetime, timedelta, timezone
 import yaml
 import time
+import execjs
+import re
+import random
+from ast import literal_eval
 
 
 # 获取当前utc时间，并格式化为北京时间
@@ -289,14 +293,110 @@ def getModAuthCas(data):
         exit(-1)
     log('获取MOD_AUTH_CAS成功。。。')
 
+# 福州大学登陆
+def login_fzu():
+    headers = {
+        'Host': 'id.fzu.edu.cn',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; VOG-AL00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept': '*/*',
+        'Connection': 'keep-alive',
+        'Content-Type': "application/x-www-form-urlencoded",
+        'Referer': 'http://id.fzu.edu.cn/authserver/login?service=http%3A%2F%2Fid.fzu.edu.cn%2Fauthserver%2Fmobile%2Fcallback%3FappId%3D673223559&login_type=mobileLogin'
+    }
+    with open('encrypt.js', 'r') as f:
+        content = f.read()
+        encrypt = execjs.compile(content)
+    pwdDefaultEncryptSalt = ''
+    username = ''
+    password = ''
+    session.cookies.set('CASTGC', '')
+    url = 'http://id.fzu.edu.cn/authserver/login?service=http%3A%2F%2Fid.fzu.edu.cn%2Fauthserver%2Fmobile%2Fcallback%3FappId%3D673223559&login_type=mobileLogin'
+    r = session.get(url=url, headers=headers)
+    soup = BeautifulSoup(r.content, 'html5lib')
+    lt = soup.find('input', attrs={'name': 'lt'})['value']
+    execution = soup.find('input', attrs={'name': 'execution'})['value']
+    pwdDefaultEncryptSalt = re.search(r'pwdDefaultEncryptSalt = "(.*)"', r.text).group(1)
+    math = str(random.random()).replace('.', '')
+    hasCode = session.get("http://id.fzu.edu.cn/authserver/needCaptcha.html?username={0}&pwdEncrypt2=pwdEncryptSalt&v={1}".format(username, math), headers=headers)
+    data = {
+            'username': "{0}".format(username),
+            'dllt': 'userNamePasswordLogin',
+            'captchaResponse': '',
+            'password': encrypt.call('encryptAES', password, pwdDefaultEncryptSalt),
+            'lt': lt,
+            'execution': execution,
+            "_eventId": "submit",
+            'rmShown': "1"
+        }
+    r = session.post(url=url, headers=headers, data=data, allow_redirects=False)
+    r = session.get(url=r.headers['Location'], headers=headers, allow_redirects=False)
+    ticket = re.search(r'mobile_token=(.*)"', r.text).group(1)
+    ticket = ticket.replace('&#43;', '+')
+    ticket = DESEncrypt(ticket)
+    data = {
+        'tenantId': 'fzu',
+        'ticket': str(ticket)
+    }
+    Content_Length = get_content_length(data)
+    headers = {
+        'SessionToken': 'szFn6zAbjjU=',
+        'clientType': 'cpdaily_student',
+        'tenantId':  '',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; PCRT00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 okhttp/3.8.1',
+        'deviceType': '1',
+        'CpdailyStandAlone': '0',
+        'CpdailyInfo': CpdailyInfo,
+        'RetrofitHeader': '8.0.8',
+        'Cache-Control': 'max-age=0',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Length': '184',
+        'Host': 'www.cpdaily.com',
+        'Connection': 'Keep-Alive',
+        'Accept-Encoding': 'gzip',
+    }
+    url = 'https://www.cpdaily.com/v6/auth/authentication/notcloud/login'
+    r = session.post(url=url, headers=headers, data=json.dumps(data))
+    errMsg = r.json()['errMsg']
+    if errMsg != None:
+        log(errMsg)
+        exit(-1)
+    result = r.json()
+    tenantId = result['data']['tenantId']
+    deviceExceptionMsg = result['data']['deviceExceptionMsg']
+    mobile = result['data']['mobile']
+    if deviceExceptionMsg != '':
+        url = 'https://www.cpdaily.com/v6/auth/deviceChange/mobile/messageCode'
+        data = {
+            'mobile': 'Sbda8j60L+IXRBHH7yCaXA=='
+        }
+        headers['Content-Length'] = ''
+        r = session.post(url=url, headers=headers, data=json.dumps(data))
+        url = 'https://www.cpdaily.com/v6/auth/deviceChange/validateMessageCode'
+        messageCode = input('massageCode')
+        data = {
+            'messageCode': messageCode,
+            'ticket': ticket,
+            'mobile': mobile
+        }
+        r = session.post(url=url, headers=headers, data=json.dumps(data))
+    errMsg = r.json()['errMsg']
+    if errMsg != None:
+        log(errMsg)
+        exit(-1)
+    log('验证登陆信息成功。。。')
+    return r.json()['data']
+
+
 
 # 通过手机号和验证码进行登陆
 def login():
     # 1. 获取验证码
-    getMessageCode()
-    code = input("请输入验证码：")
+    # getMessageCode()
+    # code = input("请输入验证码：")
     # 2. 手机号登陆
-    data = mobileLogin(code)
+    # data = mobileLogin(code)
+    data = login_fzu()
     # 3. 验证登陆信息
     data = validation(data)
     # 4. 更新acw_tc
@@ -324,6 +424,7 @@ def login():
     with open('config/loginSession.yml', 'w', encoding='utf-8') as f:
         yaml.dump(loginSession, f, sort_keys=False)
     print('登陆信息已保存')
+    
 
 
 if __name__ == '__main__':
