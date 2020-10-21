@@ -2,7 +2,7 @@
 
 # 禁止任何人使用此项目提供付费的代挂服务
 
-> ## **本项目fork自[ZimoLoveShuang](https://github.com/ZimoLoveShuang/auto-sign)，感谢ZimoLoveShuang的开发，添加了新功能以及返回消息优化，有条件请支持原作者[ZimoLoveShuang](https://github.com/ZimoLoveShuang)。**
+> ## **感谢[ZimoLoveShuang](https://github.com/ZimoLoveShuang/auto-sign)的开发，添加了新功能以及返回消息优化，有条件请支持原作者[ZimoLoveShuang](https://github.com/ZimoLoveShuang)。**
 
 ## 本项目适配 **福州大学** 今日校园签到服务，推荐有**服务器**的伙伴使用，当然由于ZimoLoveShuang模拟了登陆服务对所有学校均支持，云函数可参考原作微调使用。
 
