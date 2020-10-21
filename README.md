@@ -49,19 +49,19 @@
 
 今日校园账号密码登陆的`手机验证码`使用了不同的链接，很细节。 
 
-### 这么`细节`了恳请右上角star点一下吧~ 救救孩子=）
+### 这么**细节**了恳请右上角`star` 点一下吧！救救孩子=）
 
 
 
 # 使用
 
-1. 下载项目
+1. **下载项目**
 ```bash
 # 下拉项目代码
 git clone https://github.com/DogeZhang/auto-sign.git
 cd auto-sign
 ```
-2. 安装必备环境
+2. **安装必备环境 （仅运行一次）** 
 
 ```bash
 # 仅有python3 (直接用下面pip3的就好了)
@@ -71,13 +71,13 @@ pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
 
 ```
 
-3. 登陆
+3. **登陆**
 ```bash
 python3 login.py
 # 按照提示填入信息，相信你会的
 ```
 
-4. 签到
+4. **签到**
 ```bash
 # 每日签到、健康检测-午签到 均适配
 python3 login_sign.py
@@ -85,10 +85,9 @@ python3 login_sign.py
 python3 login_submit.py
 ```
 
-5. 没了 总结一下技术要领（五行指令，一句签到）
+5. **没了 总结一下技术要领（四行指令，一句签到）**
 ```bash
-git clone https://github.com/DogeZhang/auto-sign.git
-cd auto-sign
+git clone https://github.com/DogeZhang/auto-sign.git && cd auto-sign
 pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
 python3 login.py
 python3 login_sign.py
