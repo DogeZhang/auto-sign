@@ -100,7 +100,7 @@ python3 login_sign.py
 python3 login_submit.py
 ```
 
-5. **没了 总结一下技术要领（四行指令，一句签到）**
+5. **总结一下技术要领（四行指令，一句签到）**
 ```bash
 git clone https://github.com/DogeZhang/auto-sign.git && cd auto-sign
 pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
