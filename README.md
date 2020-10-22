@@ -77,8 +77,9 @@ pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
 
 3. **登陆**
 ```bash
-python3 login.py
 # 按照提示填入信息，相信你会的
+python3 generate_config
+python3 login.py
 ```
 
 4. **签到**
@@ -93,6 +94,6 @@ python3 login_submit.py
 ```bash
 git clone https://github.com/DogeZhang/auto-sign.git && cd auto-sign
 pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
-python3 login.py
+python3 generate_config && python3 login.py
 python3 login_sign.py
 ```

@@ -51,6 +51,22 @@ def generateConfig():
     else:
         print('|tellphone: ' + tellphone + '\n')
 
+    print('请输入登陆账号：（无需账号登陆可不填）')
+    print('+++｜例：N1903XXXXXS｜+++')
+    username_account = input('登陆账号')
+    if username_account == '':
+        print('|输入为空' + '\n')
+    else:
+        print('|username_account: ' + username_account + '\n')
+    
+    print('请输入密码：（无需账号登陆可不填）')
+    print('+++｜例：*******｜+++')
+    password = input('密码：')
+    if password == '':
+        print('|输入为空' + '\n')
+    else:
+        print('|password: ' + password + '\n')
+
     print('请输入地址：（留空直接敲回车默认：中国福建省福州市闽侯县源江路）')
     print('+++｜例：中国**省**市**县**路｜或留空直接回车｜+++')
     address = input('地址：')
@@ -145,6 +161,8 @@ def generateConfig():
         'user': {
             'username': username,
             'tellphone': tellphone,
+            'username_account': username_account,
+            'password': password
             'address': address, 
             'email': email, 
             'school': school, 

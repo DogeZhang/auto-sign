@@ -1,16 +1,20 @@
 user:
   #username 学号或者工号
-  username: '190325019'
+  username: 'XXXXXXXXX'
   #tellphone 电话号码
-  tellphone: '13107625068'
+  tellphone: '13XXXXXXX68'
+  #username_account 福州大学统一认证登陆账号
+  username_account: 'NXXXXXXX'
+  #password 福州大学统一认证登陆密码
+  password: '*************'
   #address 地址，定位信息
   address: 中国福建省福州市闽侯县源江路
   #email 接受通知消息的邮箱
-  email: 949040872@qq.com
+  email: XXXXXXXXX@qq.com
   #lon 当前位置经度，可以访问http://zuobiao.ay800.com/s/27/index.php获取
-  lon: '119.33022111'
+  lon: '119.330221'
   #lat 当前位置纬度
-  lat: '26.0471255'
+  lat: '26.047125'
   #school 学校全称
   school: 福州大学
 #今日校园相关配置
