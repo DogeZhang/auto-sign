@@ -62,8 +62,8 @@
 `generate_config.py` 用于生成配置文件  
 `index_sign.py` 适用于每日签到以及午间签到  
 `index_submit.py` 适用于健康报表  
-`login_fzu.py` 福大统一认证登陆   
-~~`login.py` 登陆（短信验证登陆、福大统一认证）~~(整合到login)  
+~~`login_fzu.py` 福大统一认证登陆~~(整合到login)   
+`login.py` 登陆（短信验证登陆、福大统一认证）  
 `sendEmail.py` 一个简单的自定邮件服务  
 `timedTask` 注册自动签到用  
 
