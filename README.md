@@ -55,7 +55,17 @@
 
 ### 这么**细节**了恳请右上角`star` 点一下吧！救救孩子=）
 
-
+# 注释
+`/config` 用于存储配置文件  
+`/example` 示例文件，可以看看  
+`encrypt.js` 加密程序  
+`generate_config.py` 用于生成配置文件  
+`index_sign.py` 适用于每日签到以及午间签到  
+`index_submit.py` 适用于健康报表  
+`login_fzu.py` 福大统一认证登陆   
+~~`login.py` 登陆（短信验证登陆、福大统一认证）~~(整合到login)  
+`sendEmail.py` 一个简单的自定邮件服务  
+`timedTask` 注册自动签到用  
 
 # 使用
 
