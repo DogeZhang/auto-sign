@@ -73,8 +73,7 @@
 1. **下载项目**
 ```bash
 # 下拉项目代码
-git clone https://github.com/DogeZhang/auto-sign.git
-cd auto-sign
+git clone https://github.com/DogeZhang/auto-sign.git && cd auto-sign
 ```
 
 2. **部署代码**
@@ -92,8 +91,7 @@ chmod +x install.sh && ./install.sh
 1. **下载项目**
 ```bash
 # 下拉项目代码
-git clone https://github.com/DogeZhang/auto-sign.git
-cd auto-sign
+git clone https://github.com/DogeZhang/auto-sign.git && cd auto-sign
 ```
 2. **安装必备环境 （仅运行一次）** 
 
