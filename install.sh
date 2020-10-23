@@ -7,7 +7,7 @@
 # cyan='\e[96m'
 # none='\e[0m'
 
-echo -e "正在获取工作路径。。"
+echo -e $red"正在获取工作路径。。"$none
 workpath=$(pwd)
 pwd > ./config/path
 echo -e "获取成功：" $yellow $workpath $none
@@ -31,9 +31,10 @@ py3=$(which python3)
 if test -z $py3
 then
     echo -e $red"没有安装python3，请安装后再运行。 apt-get install python3"
+    exit 1
 fi
 
-pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
+sudo pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
 
 echo -e $none "准备录入必备信息："
 python3 generate_config.py
