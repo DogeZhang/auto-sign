@@ -40,6 +40,6 @@ python3 login.py
 echo -e $red"准备第一次签到验证"$none
 python3 index_sign.py
 echo -e $red"正在注册自动化任务"$none
-echo "0,30 9 * * * python3 "$workpath"/index_sign.py >> "$workpath"/sign.log" > timedTask
+echo "0,50 9 * * * python3 "$workpath"/index_sign.py >> "$workpath"/sign.log" > timedTask
 crontab timedTask
 
