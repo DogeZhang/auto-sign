@@ -392,11 +392,11 @@ def login_fzu():
 # 通过手机号和验证码进行登陆
 def login():
     # 1. 获取验证码
-    # getMessageCode()
-    # code = input("请输入验证码：")
+    getMessageCode()
+    code = input("请输入验证码：")
     # 2. 手机号登陆
-    # data = mobileLogin(code)
-    data = login_fzu()
+    data = mobileLogin(code)
+    # data = login_fzu()
     # 3. 验证登陆信息
     data = validation(data)
     # 4. 更新acw_tc
