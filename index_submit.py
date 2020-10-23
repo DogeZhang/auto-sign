@@ -11,7 +11,8 @@ from login import *
 # CpdailyInfo = ''
 ##########自动配置###########
 try:
-    with open('config/loginSession.yml', 'r', encoding='utf-8') as f:
+    loginSession = os.path.join(sys.path[0], 'config', 'loginSession.yml')
+    with open(loginSession, 'r', encoding='utf-8') as f:
         file_data = f.read()
         config_read = yaml.load(file_data, Loader=yaml.FullLoader)
         Cookies = {
@@ -28,7 +29,8 @@ except IOError:
 # 全局
 session = requests.session()
 session.cookies = requests.utils.cookiejar_from_dict(Cookies)
-config = getYmlConfig('config/config_submit.yml')
+yaml_file = os.path.join(sys.path[0], 'config', 'config_submit.yml')
+config = getYmlConfig(yaml_file)
 user = config['user']
 host = getCpdailyApis(user)['host']
 

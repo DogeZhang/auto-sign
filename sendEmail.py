@@ -2,6 +2,7 @@ import smtplib
 from email.mime.text import MIMEText
 from typing import IO
 import yaml
+import sys, os
 #设置服务器所需信息
 #163邮箱服务器地址
 # mail_host = 'smtp.yeah.net'  
@@ -19,7 +20,8 @@ import yaml
 def sendEmail(msg, receiver):
     email = {}
     try:
-        with open('config/config_sign.yml', 'r', encoding='utf-8') as f:
+        yaml_file = os.path.join(sys.path[0], 'config', 'config_sign.yml')
+        with open(yaml_file, 'r', encoding='utf-8') as f:
             file_data = f.read()
             config = yaml.load(file_data, Loader=yaml.FullLoader)
             config = dict(config)

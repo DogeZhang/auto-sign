@@ -1,5 +1,5 @@
 import yaml
-import os
+import os, sys
 
 username = ''
 tellphone = ''
@@ -29,91 +29,91 @@ def generateConfig():
     生成验证信息，填错可ctrl+c并重新运行
     """
 
-    print('+++++++++生成用户配置文件、几点说明：+++++++++')
-    print('｜1. 请按输入示例输入，否则“登陆”可能不成功。')
+    print('+++++++++\033[33m生成用户配置文件、几点说明：\033[0m+++++++++')
+    print('｜1. 请按\033[31m输入示例\033[0m输入，否则“登陆”可能不成功。')
     print('｜2. 本程序不检查输入，如出错请仔细查看example下的示例文件。')
     print('｜3. 如果填写错误，请运行ctrl+c 并"python3 generate_config.py" 重新填写一次。')
-    print('｜4. 由于福大登入限制，手机登陆后，此处掉线，需运行 "python3 login.py" 重新登陆。\n')
+    print('｜4. \033[31m由于福大登入限制，手机登陆后，此处掉线，需运行 "python3 login.py" 重新登陆。\033[0m\n')
 
-    print('请输入学号：')
-    print('+++｜例：190******｜+++')
-    username = input('学号：')
+    print('请输入\033[31m学号\033[0m：')
+    print('+++｜例：\033[33m190******\033[0m｜+++')
+    username = input('\033[31m学号\033[0m：')
     if username == '':
-        print('输入为空，签到程序可能报错\n')
+        print('\033[31m输入为空，签到程序可能报错\033[0m\n')
     else:
-        print('username: ' + username + '\n')
+        print('username: \033[32m' + username + '\033[0m\n')
     
-    print('请输入手机号：')
-    print('+++｜例：131*******8｜+++')
-    tellphone = input('手机号：')
+    print('请输入\033[31m手机号\033[0m：')
+    print('+++｜例：\033[33m131*******8\033[0m｜+++')
+    tellphone = input('\033[31m手机号\033[0m：')
     if tellphone == '':
-        print('|输入为空，签到程序可能报错' + '\n')
+        print('|\033[31m输入为空，签到程序可能报错\033[0m' + '\n')
     else:
-        print('|tellphone: ' + tellphone + '\n')
+        print('|tellphone: \033[32m' + tellphone + '\033[0m\n')
 
-    print('请输入登陆账号：（无需账号登陆可不填）')
-    print('+++｜例：N1903XXXXXS｜+++')
-    username_account = input('登陆账号')
+    print('请输入\033[31m登陆账号\033[0m：（无需账号登陆可不填）')
+    print('+++｜例：\033[33mN1903XXXXXS\033[0m｜+++')
+    username_account = input('\033[31m登陆账号\033[0m: ')
     if username_account == '':
-        print('|输入为空' + '\n')
+        print('|\033[31m输入为空\033[0m' + '\n')
     else:
-        print('|username_account: ' + username_account + '\n')
+        print('|username_account: \033[32m' + username_account + '\033[0m\n')
     
-    print('请输入密码：（无需账号登陆可不填）')
-    print('+++｜例：*******｜+++')
-    password = input('密码：')
+    print('请输入\033[31m密码\033[0m：（无需账号登陆可不填）')
+    print('+++｜例：\033[33m*******\033[0m｜+++')
+    password = input('\033[31m密码\033[0m：')
     if password == '':
-        print('|输入为空' + '\n')
+        print('|\033[31m输入为空\033[0m' + '\n')
     else:
-        print('|password: ' + password + '\n')
+        print('|password: \033[32m' + password + '\033[0m\n')
 
-    print('请输入地址：（留空直接敲回车默认：中国福建省福州市闽侯县源江路）')
-    print('+++｜例：中国**省**市**县**路｜或留空直接回车｜+++')
-    address = input('地址：')
+    print('请输入\033[31m地址\033[0m：（留空直接敲回车\033[0m默认：中国福建省福州市闽侯县源江路\033[0m）')
+    print('+++｜例：\033[33m中国**省**市**县**路\033[0m｜或留空\033[33m直接回车\033[0m｜+++')
+    address = input('\033[31m地址\033[0m：')
     if address == '':
-        print('|输入为空，默认 中国福建省福州市闽侯县源江路' + '\n')
+        print('|\033[31m输入为空\033[0m，默认 \033[33m中国福建省福州市闽侯县源江路\033[0m' + '\n')
         address = '中国福建省福州市闽侯县源江路'
     else:
         print('|address: ' + address + '\n')
     
-    print('请输入邮箱：')
-    print('+++｜例：***@**.**｜+++')
-    email = input('邮箱：')
+    print('请输入\033[31m邮箱\033[0m：')
+    print('+++｜例：\033[33m***@**.**\033[0m｜+++')
+    email = input('\033[31m邮箱\033[0m：')
     if email == '':
-        print('|输入为空，签到程序可能报错' + '\n')
+        print('|\033[31m输入为空，签到程序可能报错\033[0m' + '\n')
     else:
-        print('|email: ' + email + '\n')
+        print('|email: \033[32m' + email + '\033[0m\n')
     
-    print('请输入学校：（留空直接敲回车默认：福州大学）')
-    print('+++｜例：**大学｜+++')
-    school = input('学校：')
+    print('请输入\033[31m学校\033[0m：（留空直接敲回车默认：\033[33m福州大学\033[0m）')
+    print('+++｜例：\033[33m**大学\033[0m｜+++')
+    school = input('\033[31m学校\033[0m：')
     if school == '':
-        print('|输入为空，默认：福州大学' + '\n')
+        print('|\033[31m输入为空\033[0m，默认：\033[33m福州大学\033[0m' + '\n')
         school = '福州大学'
     else:
-        print('|school: ' + school + '\n')
+        print('|school: \033[32m' + school + '\033[0m\n')
     
-    print('请输入经度：（请访问 https://lbs.amap.com/api/javascript-api/example/map/click-to-get-lnglat/ 获取经纬度）')
-    print('+++｜例：119.203149｜+++')
-    lon = input('经度：')
+    print('请输入\033[31m经度(六位小数)\033[0m：（请访问 https://lbs.amap.com/api/javascript-api/example/map/click-to-get-lnglat/ 获取经纬度）')
+    print('+++｜例：\033[33m119.203149\033[0m｜+++')
+    lon = input('\033[31m经度\033[0m：')
     if lon == '':
-        print('|输入为空，签到程序可能报错' + '\n')
+        print('|\033[31m输入为空，签到程序可能报错\033[0m' + '\n')
     else:
-        print('|lon: ' + lon + '\n')
+        print('|lon: \033[32m' + lon + '\033[0m\n')
 
-    print('请输入纬度：（请访问 https://lbs.amap.com/api/javascript-api/example/map/click-to-get-lnglat/ 获取经纬度）')
-    print('+++｜例：26.062701｜+++')
-    lat = input('纬度：')
+    print('请输入\033[31m纬度(六位小数)\033[0m：（请访问 https://lbs.amap.com/api/javascript-api/example/map/click-to-get-lnglat/ 获取经纬度）')
+    print('+++｜例：\033[33m26.062701\033[0m｜+++')
+    lat = input('\033[31m纬度\033[0m：')
     if lat == '':
-        print('|输入为空，签到程序可能报错' + '\n')
+        print('|\033[31m输入为空，签到程序可能报错\033[0m' + '\n')
     else:
-        print('|lat: ' + lat + '\n')
+        print('|lat: \033[32m' + lat + '\033[0m\n')
 
     print('\n')
-    print('+++|配置邮箱通知服务|+++')
-    print('|1. 如果懒得配置，请输入 1，或者直接回车（别输别的！），使用原作者提供的邮箱服务（注意事项看readme）。')
-    print('|2. 如果有 2 个邮箱（是两个！不能和上一个邮箱相同！），可使用自己邮箱发送结果。（需开启SMTP！自己百度！）')
-    isAuthor = input('是否使用原作者邮箱服务？（直接回车 或 1:是｜0：否）')
+    print('+++|\033[31m配置邮箱通知服务\033[0m|+++')
+    print('|1. 如果懒得配置，请输入 \033[31m1\033[0m，或者\033[31m直接回车\033[0m（别输别的！），使用原作者提供的邮箱服务（注意事项看readme）。')
+    print('|2. 如果有 2 个邮箱（\033[31m是两个！不能和上一个邮箱相同！\033[0m），可使用自己邮箱\033[31m发送结果\033[0m。（需开启SMTP！自己百度！）')
+    isAuthor = input('是否使用原作者邮箱服务？（直接回车 或 1:\033[31m是\033[0m｜0：否，\033[33m使用自己的邮箱发送结果通知\033[0m）')
     if isAuthor == '' or isAuthor == 1:
         print('懒得配置，使用原作者提供的邮箱服务。')
         isAuthor = 1
@@ -122,47 +122,47 @@ def generateConfig():
         mail_pass = ''   
         sender = '' 
     else:
-        print('使用自己的邮箱发送结果。\n')
-        print('请输入邮箱服务器：')
-        print('+++｜例：smtp.yeah.net｜+++')
-        mail_host = input('邮箱服务器：')
+        print('\033[32m使用自己的邮箱发送结果。\033[0m\n')
+        print('请输入\033[31m邮箱服务器：\033[0m')
+        print('+++｜例：\033[33msmtp.yeah.net\033[0m｜+++')
+        mail_host = input('\033[31m邮箱服务器：\033[0m')
         if mail_host == '':
-            print('|输入为空，邮箱服务可能无法正常运行' + '\n')
+            print('|\033[31m输入为空，邮箱服务可能无法正常运行\033[0m' + '\n')
         else:
-            print('|mail_host: ' + mail_host + '\n')
+            print('|mail_host: \033[32m' + mail_host + '\033[0m\n')
 
-        print('请输入邮箱用户名：')
-        print('+++｜例：sdfdfesd｜@前面那一段|+++')
-        mail_user = input('邮箱用户名：')
+        print('请输入\033[31m邮箱用户名\033[0m：')
+        print('+++｜例：\033[33msdfdfesd\033[0m｜@前面那一段|+++')
+        mail_user = input('\033[31m邮箱用户名：\033[0m')
         if mail_user == '':
-            print('|输入为空，邮箱服务可能无法正常运行' + '\n')
+            print('|\033[31m输入为空，邮箱服务可能无法正常运行\033[0m' + '\n')
         else:
-            print('|mail_host: ' + mail_user + '\n')
+            print('|mail_host: \033[32m' + mail_user + '\033[0m\n')
 
-        print('请输入密码(部分邮箱为授权码)：')
-        print('+++｜例：GVARYOSKBONSBMFB｜开通SMTP可见|+++')
-        mail_pass = input('密码：')
+        print('请输入\033[31m密码(部分邮箱为授权码)\033[0m：')
+        print('+++｜例：\033[33mGVARYOSKBONSBMFB\033[0m｜开通SMTP可见|+++')
+        mail_pass = input('\033[31m密码\033[0m：')
         if mail_pass == '':
-            print('|输入为空，邮箱服务可能无法正常运行' + '\n')
+            print('|\033[31m输入为空，邮箱服务可能无法正常运行\033[0m' + '\n')
         else:
-            print('|mail_pass: ' + mail_pass + '\n')
+            print('|mail_pass: \033[32m' + mail_pass + '\033[0m\n')
         
         print('请输入用于发送结果信息的邮箱：')
-        print('+++｜例：sdfdfesd@yeah.net|+++')
-        sender = input('邮箱：')
+        print('+++｜例：\033[33msdfdfesd@yeah.net\033[0m|+++')
+        sender = input('\033[31m邮箱\033[0m：')
         if sender == '':
-            print('|输入为空，邮箱服务可能无法正常运行' + '\n')
+            print('|\033[31m输入为空，邮箱服务可能无法正常运行\033[0m' + '\n')
         else:
-            print('|sender: ' + sender + '\n')
+            print('|sender: \033[32m' + sender + '\033[0m\n')
 
     
-    print('输入完毕，正在生成配置文件。')
+    print('\033[32m输入完毕，正在生成配置文件。\033[0m')
     config = {
         'user': {
             'username': username,
             'tellphone': tellphone,
             'username_account': username_account,
-            'password': password
+            'password': password,
             'address': address, 
             'email': email, 
             'school': school, 
@@ -196,18 +196,20 @@ def generateConfig():
         }
     }
     try:
-        with open('config/config.yml', 'w', encoding='utf-8') as f:
+        yaml_file = os.path.join(sys.path[0], 'config', 'config_sign.yml')
+        with open(yaml_file, 'w', encoding='utf-8') as f:
             yaml.dump(config, f, sort_keys=False, allow_unicode = True)
     except IOError:
-        print('IO 出错，无法生成配置文件。' + '\n')
+        print('\033[31mIO 出错，无法生成配置文件。\033[0m' + '\n')
         print(IOError)
     else:
-        print('生成配置文件成功！' + '\n')
-        with open('config/config.yml', 'r', encoding='utf-8') as f:
+        print('\033[32m生成配置文件成功！\033[0m' + '\n')
+        yaml_file = os.path.join(sys.path[0], 'config', 'config_sign.yml')
+        with open(yaml_file, 'r', encoding='utf-8') as f:
             file_data = f.read()
             # config_read = yaml.load(file_data, Loader=yaml.FullLoader)
             print(file_data)
-        print('\n' + '+++｜已按福大“默认签到表格”生成配置文件，请对照，如有出入在config/config.yml中修改或重新运行改程序｜+++' + '\n')
+        print('\n' + '+++｜\033[32m已按福大“默认签到表格”生成配置文件，请对照，如有出入在config/config_sign.yml中修改或重新运行改程序\033[0m｜+++' + '\n')
     
     
 

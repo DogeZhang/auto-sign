@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
-import sys
+import sys, os
 import json
 import yaml
 import login
@@ -16,7 +16,8 @@ import sendEmail
 # sessionToken = ''
 ##########自动配置###########
 try:
-    with open('config/loginSession.yml', 'r', encoding='utf-8') as f:
+    loginSession = os.path.join(sys.path[0], 'config', 'loginSession.yml')
+    with open(loginSession, 'r', encoding='utf-8') as f:
         file_data = f.read()
         config_read = yaml.load(file_data, Loader=yaml.FullLoader)
         Cookies = {
@@ -45,8 +46,8 @@ def getYmlConfig(yaml_file='config/config_sign.yml'):
     config = yaml.load(file_data, Loader=yaml.FullLoader)
     return dict(config)
 
-
-config = getYmlConfig()
+yaml_file = os.path.join(sys.path[0], 'config', 'config_sign.yml')
+config = getYmlConfig(yaml_file)
 user = config['user']
 email_yml = config['email']
 

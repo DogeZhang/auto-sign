@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys
+import sys, os
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import requests
@@ -13,7 +13,8 @@ import time
 import execjs
 import re
 import random
-from ast import literal_eval
+import sendEmail
+
 
 
 # 获取当前utc时间，并格式化为北京时间
@@ -80,6 +81,7 @@ def getCpdailyApis(user, debug=False):
 
 # 读取yml配置
 def getYmlConfig(yaml_file='config/config_sign.yml'):
+    yaml_file = os.path.join(sys.path[0], 'config', 'config_sign.yml')
     file = open(yaml_file, 'r', encoding="utf-8")
     file_data = file.read()
     file.close()
@@ -107,6 +109,7 @@ def DESDecrypt(s, key='XCE927=='):
 config = getYmlConfig()
 session = requests.session()
 user = config['user']
+email_yml = config['email']
 # Cpdaily-Extension
 extension = {
     "lon": user['lon'],
@@ -284,6 +287,11 @@ def getModAuthCas(data):
         'Cookie': 'clientType=cpdaily_student; tenantId=' + apis['tenantId'] + '; sessionToken=' + sessionToken,
     }
     res = session.get(url=location, headers=headers2, allow_redirects=False)
+    if hasattr(res.headers, 'location'): 
+        print('验证成功。')
+    else:
+        print("验证失败，请重新登陆。")
+        sendMessage('验证失败，请重新登陆！！', user['email'])
     location = res.headers['location']
     # print(location)
     session.get(url=location, headers=headers)
@@ -338,7 +346,6 @@ def login_fzu():
         'tenantId': 'fzu',
         'ticket': str(ticket)
     }
-    Content_Length = get_content_length(data)
     headers = {
         'SessionToken': 'szFn6zAbjjU=',
         'clientType': 'cpdaily_student',
@@ -387,7 +394,30 @@ def login_fzu():
     log('验证登陆信息成功。。。')
     return r.json()['data']
 
-
+# 发送邮件通知
+def sendMessage(msg, email):
+    send = email
+    isAuthor = email_yml['isAuthor']
+    if send != '':
+        #使用原作者邮箱服务
+        if int(isAuthor) == 1:
+            log('正在发送邮件通知。。。')
+            res = requests.post(url='http://www.zimo.wiki:8080/mail-sender/sendMail',
+                                data={'title': '今日校园自动签到结果通知', 'content': msg, 'to': send})
+            code = res.json()['code']
+            if code == 0:
+                log('发送邮件通知成功。。。')
+            else:
+                log('发送邮件通知失败。。。')
+                log(res.json())
+        else: #使用自己邮箱发送结果
+            log('正在发送邮件通知。。。')
+            code = sendEmail.sendEmail(msg, send)
+            if code == 0:
+                log('发送邮件通知成功。。。')
+            else:
+                log('发送邮件通知失败。。。')
+                log(code)
 
 # 通过手机号和验证码进行登陆
 def login():

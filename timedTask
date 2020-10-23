@@ -1,1 +1,1 @@
-* * * * * python3 index_sign.py >> sing.log
+50,51,52 19 * * * python3 /home/daoyun/projects/git/auto-sign/index_sign.py >> /home/daoyun/projects/git/auto-sign/sign.log
