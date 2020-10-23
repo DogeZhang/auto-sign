@@ -70,7 +70,25 @@
 `timedTask` 注册自动签到用  
 
 # 使用
+1. **下载项目**
+```bash
+# 下拉项目代码
+git clone https://github.com/DogeZhang/auto-sign.git
+cd auto-sign
+```
 
+2. **部署代码**
+```bash
+# 部署代码
+chmod +x install.sh && ./install.sh
+```
+
+3. **Enjoy**
+
+------------
+
+
+# 详细步骤（可省略, 便于了解代码过程）
 1. **下载项目**
 ```bash
 # 下拉项目代码

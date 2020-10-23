@@ -18,10 +18,10 @@ echo -e $red"2. 非常同意"$none
 read -p "请输入： 1 或 2:" result
 if test $result -eq 1
 then 
-    echo -e "非常好！让我们继续吧！"
+    echo -e "非常好！让我们继续吧！开始安装所需环境"
 elif test $result -eq 2
 then 
-    echo -e "非常好！让我们继续吧！"
+    echo -e "非常好！让我们继续吧！开始安装所需环境"
 else
     echo -e $red"Bye."
     exit 1
@@ -32,6 +32,8 @@ if test -z $py3
 then
     echo -e $red"没有安装python3，请安装后再运行。 apt-get install python3"
 fi
+
+pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
 
 echo -e $none "准备录入必备信息："
 python3 generate_config.py
