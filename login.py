@@ -392,6 +392,7 @@ def login_fzu():
         log(errMsg)
         exit(-1)
     log('验证登陆信息成功。。。')
+    sendEmail("登陆成功。", user['email'])
     return r.json()['data']
 
 # 发送邮件通知

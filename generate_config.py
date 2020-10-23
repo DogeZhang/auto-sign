@@ -51,7 +51,7 @@ def generateConfig():
     else:
         print('|tellphone: \033[32m' + tellphone + '\033[0m\n')
 
-    print('请输入\033[31m登陆账号\033[0m：（无需账号登陆可不填）')
+    print('请输入\033[31m福大统一认证登陆账号\033[0m：（无需账号登陆可不填）')
     print('+++｜例：\033[33mN1903XXXXXS\033[0m｜+++')
     username_account = input('\033[31m登陆账号\033[0m: ')
     if username_account == '':
