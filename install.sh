@@ -44,5 +44,7 @@ echo -e $red"准备第一次签到验证"$none
 python3 index_sign.py
 echo -e $red"正在注册自动化任务"$none
 echo "0,50 9 * * * python3 "$workpath"/index_sign.py >> "$workpath"/sign.log" > timedTask
-crontab timedTask
+crontab timedTask && echo -e $green"注册自动化任务成功， 使用crontab -l查看， crontab -r删除"$none
+
+
 
