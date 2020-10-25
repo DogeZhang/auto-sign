@@ -34,7 +34,7 @@ then
     exit 1
 fi
 
-sudo pip3 install -r requirements.txt -t . -i https://mirrors.aliyun.com/pypi/simple
+pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple
 
 echo -e $none "准备录入必备信息："
 python3 generate_config.py
