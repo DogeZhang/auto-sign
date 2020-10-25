@@ -287,12 +287,12 @@ def getModAuthCas(data):
         'Cookie': 'clientType=cpdaily_student; tenantId=' + apis['tenantId'] + '; sessionToken=' + sessionToken,
     }
     res = session.get(url=location, headers=headers2, allow_redirects=False)
-    if hasattr(res.headers, 'location'): 
+    try: 
+        location = res.headers['location']
         print('验证成功。')
-    else:
+    except KeyError:
         print("验证失败，请重新登陆。")
         sendMessage('验证失败，请重新登陆！！', user['email'])
-    location = res.headers['location']
     # print(location)
     session.get(url=location, headers=headers)
     cookies = requests.utils.dict_from_cookiejar(session.cookies)

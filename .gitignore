@@ -3,3 +3,4 @@ config/config_sign.yml
 config/config_submit.yml
 config/loginSession.yml
 /.vscode
+.vscode/setting.json
