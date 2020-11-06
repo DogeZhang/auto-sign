@@ -4,6 +4,8 @@
 
 > ## **感谢[ZimoLoveShuang](https://github.com/ZimoLoveShuang/auto-sign)的开发，添加了新功能以及返回消息优化，有条件请支持原作者[ZimoLoveShuang](https://github.com/ZimoLoveShuang)。**
 
+> ### 2020.11.06 更新 由于修改了签到API前几天无法正常使用（这几天没空），感谢[wxyttty](https://github.com/wxyttty)提供了最新的接口。
+
 ## 本项目适配 **福州大学** 今日校园签到服务，推荐有**服务器**的伙伴使用，当然由于ZimoLoveShuang模拟了登陆服务对所有学校均支持，云函数可参考原作微调使用。
 
 # 真·一键部署 + 自动签到
