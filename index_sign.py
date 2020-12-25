@@ -79,7 +79,8 @@ def getUnSignedTasks():
         'Accept-Language': 'zh-CN,en-US;q=0.8',
     }
     params = {}
-    url = 'https://{host}/wec-counselor-sign-apps/stu/sign/queryDailySginTasks'.format(host=host)
+    #url = 'https://{host}/wec-counselor-sign-apps/stu/sign/queryDailySginTasks'.format(host=host)
+    url = 'https://{host}/wec-counselor-sign-apps/stu/sign/getStuSignInfosInOneDay'.format(host=host)
     res = session.post(url=url, headers=headers, data=json.dumps(params))
     # log(res.json())
     unSignedTasks = res.json()['datas']['unSignedTasks']
@@ -220,6 +221,7 @@ def main_handler(event, context):
         main()
         return 'success'
     except:
+        raise
         return 'fail'
 
 
