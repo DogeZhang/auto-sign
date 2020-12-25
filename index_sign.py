@@ -108,7 +108,7 @@ def getDetailTask(params):
         'Content-Type': 'application/json;charset=UTF-8'
     }
     res = session.post(
-        url='https://{host}/wec-counselor-sign-apps/stu/sign/detailSignTaskInst'.format(host=host),
+        url='https://{host}/wec-counselor-sign-apps/stu/sign/detailSignInstance'.format(host=host),
         headers=headers, data=json.dumps(params))
     print(json.dumps(res.json(), indent=4, ensure_ascii=False))
     data = res.json()['datas']
@@ -162,7 +162,7 @@ def submitForm(form):
         # 'Host': 'swu.cpdaily.com',
         'Connection': 'Keep-Alive'
     }
-    res = session.post(url='https://{host}/wec-counselor-sign-apps/stu/sign/completeSignIn'.format(host=host),
+    res = session.post(url='https://{host}/wec-counselor-sign-apps/stu/sign/submitSign'.format(host=host),
                        headers=headers, data=json.dumps(form))
     message = res.json()['message']
     if message == 'SUCCESS':
