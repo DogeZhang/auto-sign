@@ -25,6 +25,9 @@ try:
             'MOD_AUTH_CAS': config_read['sessionCookies']['MOD_AUTH_CAS'],
         }
         CpdailyInfo = config_read['CpdailyInfo']
+        if CpdailyInfo == 'dynamic':
+            CpdailyInfo = login.CpdailyInfo
+
         sessionToken = config_read['sessionToken']
 except IOError:
     print('读取登陆配置文件出错！请查看是否存在配置文件，或重新登陆。\n')
