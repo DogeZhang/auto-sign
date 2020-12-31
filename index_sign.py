@@ -25,6 +25,9 @@ try:
             'MOD_AUTH_CAS': config_read['sessionCookies']['MOD_AUTH_CAS'],
         }
         CpdailyInfo = config_read['CpdailyInfo']
+        if CpdailyInfo == 'dynamic':
+            CpdailyInfo = login.CpdailyInfo
+
         sessionToken = config_read['sessionToken']
 except IOError:
     print('读取登陆配置文件出错！请查看是否存在配置文件，或重新登陆。\n')
@@ -79,7 +82,8 @@ def getUnSignedTasks():
         'Accept-Language': 'zh-CN,en-US;q=0.8',
     }
     params = {}
-    url = 'https://{host}/wec-counselor-sign-apps/stu/sign/queryDailySginTasks'.format(host=host)
+    #url = 'https://{host}/wec-counselor-sign-apps/stu/sign/queryDailySginTasks'.format(host=host)
+    url = 'https://{host}/wec-counselor-sign-apps/stu/sign/getStuSignInfosInOneDay'.format(host=host)
     res = session.post(url=url, headers=headers, data=json.dumps(params))
     # log(res.json())
     unSignedTasks = res.json()['datas']['unSignedTasks']
@@ -107,7 +111,7 @@ def getDetailTask(params):
         'Content-Type': 'application/json;charset=UTF-8'
     }
     res = session.post(
-        url='https://{host}/wec-counselor-sign-apps/stu/sign/detailSignTaskInst'.format(host=host),
+        url='https://{host}/wec-counselor-sign-apps/stu/sign/detailSignInstance'.format(host=host),
         headers=headers, data=json.dumps(params))
     print(json.dumps(res.json(), indent=4, ensure_ascii=False))
     data = res.json()['datas']
@@ -161,7 +165,7 @@ def submitForm(form):
         # 'Host': 'swu.cpdaily.com',
         'Connection': 'Keep-Alive'
     }
-    res = session.post(url='https://{host}/wec-counselor-sign-apps/stu/sign/completeSignIn'.format(host=host),
+    res = session.post(url='https://{host}/wec-counselor-sign-apps/stu/sign/submitSign'.format(host=host),
                        headers=headers, data=json.dumps(form))
     message = res.json()['message']
     if message == 'SUCCESS':
@@ -220,6 +224,7 @@ def main_handler(event, context):
         main()
         return 'success'
     except:
+        raise
         return 'fail'
 
 

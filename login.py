@@ -15,7 +15,7 @@ import re
 import random
 import sendEmail
 
-
+CPDAILY_USER_AGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 (4471302144)cpdaily/8.2.12 wisedu/8.2.12'
 
 # 获取当前utc时间，并格式化为北京时间
 def getTimeStr():
@@ -33,7 +33,7 @@ def log(content):
 # 获取今日校园api
 def getCpdailyApis(user, debug=False):
     apis = {}
-    schools = requests.get(url='https://www.cpdaily.com/v6/config/guest/tenant/list', verify=not debug).json()['data']
+    schools = requests.get(url='https://mobile.campushoy.com/v6/config/guest/tenant/list', verify=not debug).json()['data']
     flag = True
     for one in schools:
         if one['name'] == user['school']:
@@ -45,7 +45,7 @@ def getCpdailyApis(user, debug=False):
                 'ids': one['id']
             }
             apis['tenantId'] = one['id']
-            res = requests.get(url='https://www.cpdaily.com/v6/config/guest/tenant/info', params=params,
+            res = requests.get(url='https://mobile.campushoy.com/v6/config/guest/tenant/info', params=params,
                                verify=not debug)
             data = res.json()['data'][0]
             joinType = data['joinType']
@@ -90,7 +90,7 @@ def getYmlConfig(yaml_file='config/config_sign.yml'):
 
 
 # DES加密
-def DESEncrypt(s, key='XCE927=='):
+def DESEncrypt(s, key='ST83=@XV'):
     iv = b"\x01\x02\x03\x04\x05\x06\x07\x08"
     k = des(key, CBC, iv, pad=None, padmode=PAD_PKCS5)
     encrypt_str = k.encrypt(s)
@@ -98,7 +98,7 @@ def DESEncrypt(s, key='XCE927=='):
 
 
 # DES解密
-def DESDecrypt(s, key='XCE927=='):
+def DESDecrypt(s, key='ST83=@XV'):
     s = base64.b64decode(s)
     iv = b"\x01\x02\x03\x04\x05\x06\x07\x08"
     k = des(key, CBC, iv, pad=None, padmode=PAD_PKCS5)
@@ -113,11 +113,11 @@ email_yml = config['email']
 # Cpdaily-Extension
 extension = {
     "lon": user['lon'],
-    "model": "PCRT00",
-    "appVersion": "8.0.8",
-    "systemVersion": "4.4.4",
+    "model": "iPhone10,1",
+    "appVersion": "8.2.12",
+    "systemVersion": "13.3.1",
     "userId": user['username'],
-    "systemName": "android",
+    "systemName": "iOS",
     "lat": user['lat'],
     "deviceId": str(uuid.uuid1())
 }
@@ -133,11 +133,11 @@ def getMessageCode():
         'SessionToken': 'szFn6zAbjjU=',
         'clientType': 'cpdaily_student',
         'tenantId': apis['tenantId'],
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; PCRT00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 okhttp/3.8.1',
+        'User-Agent': CPDAILY_USER_AGENT,
         'deviceType': '1',
         'CpdailyStandAlone': '0',
         'CpdailyInfo': CpdailyInfo,
-        'RetrofitHeader': '8.0.8',
+        'RetrofitHeader': '8.2.12',
         'Cache-Control': 'max-age=0',
         'Content-Type': 'application/json; charset=UTF-8',
         'Host': 'www.cpdaily.com',
@@ -147,11 +147,11 @@ def getMessageCode():
     params = {
         'mobile': DESEncrypt(str(user['tellphone']))
     }
-    url = 'https://www.cpdaily.com/v6/auth/authentication/mobile/messageCode'
+    url = 'https://mobile.campushoy.com/v6/auth/authentication/mobile/messageCode'
     res = session.post(url=url, headers=headers, data=json.dumps(params))
     errMsg = res.json()['errMsg']
     if errMsg != None:
-        log(errMsg)
+        log(res.json())
         exit(-1)
     log('获取验证码成功。。。')
 
@@ -163,11 +163,11 @@ def mobileLogin(code):
         'SessionToken': 'szFn6zAbjjU=',
         'clientType': 'cpdaily_student',
         'tenantId': apis['tenantId'],
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; PCRT00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 okhttp/3.8.1',
+        'User-Agent': CPDAILY_USER_AGENT,
         'deviceType': '1',
         'CpdailyStandAlone': '0',
         'CpdailyInfo': CpdailyInfo,
-        'RetrofitHeader': '8.0.8',
+        'RetrofitHeader': '8.2.12',
         'Cache-Control': 'max-age=0',
         'Content-Type': 'application/json; charset=UTF-8',
         'Host': 'www.cpdaily.com',
@@ -197,11 +197,11 @@ def validation(data):
         'SessionToken': DESEncrypt(sessionToken),
         'clientType': 'cpdaily_student',
         'tenantId': apis['tenantId'],
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; PCRT00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 okhttp/3.8.1',
+        'User-Agent': CPDAILY_USER_AGENT,
         'deviceType': '1',
         'CpdailyStandAlone': '0',
         'CpdailyInfo': CpdailyInfo,
-        'RetrofitHeader': '8.0.8',
+        'RetrofitHeader': '8.2.12',
         'Cache-Control': 'max-age=0',
         'Content-Type': 'application/json; charset=UTF-8',
         'Host': 'www.cpdaily.com',
@@ -243,11 +243,11 @@ def updateACwTc(data):
         'SessionToken': DESEncrypt(sessionToken),
         'clientType': 'cpdaily_student',
         'tenantId': apis['tenantId'],
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; PCRT00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 okhttp/3.8.1',
+        'User-Agent': CPDAILY_USER_AGENT,
         'deviceType': '1',
         'CpdailyStandAlone': '0',
         'CpdailyInfo': CpdailyInfo,
-        'RetrofitHeader': '8.0.8',
+        'RetrofitHeader': '8.2.12',
         'Cache-Control': 'max-age=0',
         'Host': host,
         'Connection': 'Keep-Alive',
@@ -267,7 +267,7 @@ def getModAuthCas(data):
     headers = {
         'Host': host,
         'Connection': 'keep-alive',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; PCRT00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 cpdaily/8.0.8 wisedu/8.0.8',
+        'User-Agent': CPDAILY_USER_AGENT,
         'Accept-Encoding': 'gzip,deflate',
         'Accept-Language': 'zh-CN,en-US;q=0.8',
         'X-Requested-With': 'com.wisedu.cpdaily'
@@ -281,7 +281,7 @@ def getModAuthCas(data):
         'Host': 'www.cpdaily.com',
         'Connection': 'keep-alive',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; PCRT00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 cpdaily/8.0.8 wisedu/8.0.8',
+        'User-Agent': CPDAILY_USER_AGENT,
         'Accept-Encoding': 'gzip,deflate',
         'Accept-Language': 'zh-CN,en-US;q=0.8',
         'Cookie': 'clientType=cpdaily_student; tenantId=' + apis['tenantId'] + '; sessionToken=' + sessionToken,
@@ -305,7 +305,7 @@ def getModAuthCas(data):
 def login_fzu():
     headers = {
         'Host': 'id.fzu.edu.cn',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; VOG-AL00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36',
+        'User-Agent': CPDAILY_USER_AGENT,
         'Accept-Encoding': 'gzip, deflate',
         'Accept': '*/*',
         'Connection': 'keep-alive',
@@ -350,11 +350,11 @@ def login_fzu():
         'SessionToken': 'szFn6zAbjjU=',
         'clientType': 'cpdaily_student',
         'tenantId':  '',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; PCRT00 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 okhttp/3.8.1',
+        'User-Agent': CPDAILY_USER_AGENT,
         'deviceType': '1',
         'CpdailyStandAlone': '0',
         'CpdailyInfo': CpdailyInfo,
-        'RetrofitHeader': '8.0.8',
+        'RetrofitHeader': '8.2.12',
         'Cache-Control': 'max-age=0',
         'Content-Type': 'application/json; charset=UTF-8',
         'Content-Length': '184',
